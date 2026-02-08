@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Hello Box</title>
+    <style>
+        :root {
+            --bg-color: #fce4ec;
+            --box-bg: #e1bee7;
+            --border-color: #9575cd;
+            --yes-grad: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --no-grad: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+	    font-family: "Lucida Handwriting", "Lucida Handwriting Std", cursive, sans-serif;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .box {
+            background-color: var(--box-bg);
+            border: 3px solid var(--border-color);
+            padding: 1.5rem;
+            width: 90%;
+            max-width: 400px;
+            height: 450px; /* Fixed height to maintain layout */
+            text-align: center;
+            border-radius: 30px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: #4a148c;
+            margin: 10px 0; /* Pushed toward the top */
+        }
+
+        .main-img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            margin: 10px 0;
+            border-radius: 20px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+            margin-top: auto; /* Pushes buttons toward the bottom */
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            touch-action: manipulation;
+        }
+
+        .btn-yes { background: var(--yes-grad); color: #1b5e20; }
+        .btn-no { background: var(--no-grad); color: #bf360c; position: relative; z-index: 10; }
+
+        .gif-result {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box" id="mainBox">
+     <h1 id="heading" style="color: #DC143C;">WILL YOU BE MY VALENTINE????</h1>
+
+        
+        <img src="https://i.postimg.cc/q7fJTd43/5df9c062-816f-4b10-8893-ba1034ecfee4.jpg" 
+             alt="Cute Teddy" 
+             class="main-img" 
+             id="mainImg">
+        
+        <div class="btn-container" id="controls">
+            <button class="btn btn-yes" onclick="showGif()">Yes</button>
+            <button class="btn btn-no" id="noBtn">No</button>
+        </div>
+
+        <div id="gifContainer"></div>
+    </div>
+
+        <script>
+        const noBtn = document.getElementById('noBtn');
+        const box = document.getElementById('mainBox');
+
+        function moveButton() {
+            noBtn.style.position = 'absolute';
+            const boxRect = box.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            // Padding to keep inside rounded corners
+            const pad = 30;
+            const maxX = boxRect.width - btnRect.width - pad;
+            const maxY = boxRect.height - btnRect.height - pad;
+
+            const randomX = Math.max(pad, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(pad, Math.floor(Math.random() * maxY));
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        function showGif() {
+            document.getElementById("heading").innerText = "Yay! ❤️";
+            document.getElementById("mainImg").style.display = "none";
+            document.getElementById("controls").style.display = "none";
+            document.getElementById("gifContainer").innerHTML = 
+                `<img src="https://i.gifer.com/ePO.gif" class="gif-result">`;
+        }
+    </script>
+</body>
+</html>
